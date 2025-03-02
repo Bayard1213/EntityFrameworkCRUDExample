@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище TechnomediaTestTaskDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="assignments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="request_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="contact_info" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="requests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="status" Type="nvarchar" MaxLength="255" />
+          <Property Name="research_notes" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="teams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="work_logs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="assignment_id" Type="int" Nullable="false" />
+          <Property Name="start_time" Type="datetime" />
+          <Property Name="end_time" Type="datetime" />
+          <Property Name="comments" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_Assignments_Requests">
+          <End Role="requests" Type="Self.requests" Multiplicity="1" />
+          <End Role="assignments" Type="Self.assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="requests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assignments">
+              <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assignments_Teams">
+          <End Role="teams" Type="Self.teams" Multiplicity="1" />
+          <End Role="assignments" Type="Self.assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assignments">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="roles" Type="Self.roles" Multiplicity="1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Work_Logs_Assignments">
+          <End Role="assignments" Type="Self.assignments" Multiplicity="1" />
+          <End Role="work_logs" Type="Self.work_logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assignments">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="work_logs">
+              <PropertyRef Name="assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище TechnomediaTestTaskDBModelContainer">
+          <EntitySet Name="assignments" EntityType="Self.assignments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requests" EntityType="Self.requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="teams" EntityType="Self.teams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="work_logs" EntityType="Self.work_logs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Assignments_Requests" Association="Self.FK_Assignments_Requests">
+            <End Role="requests" EntitySet="requests" />
+            <End Role="assignments" EntitySet="assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assignments_Teams" Association="Self.FK_Assignments_Teams">
+            <End Role="teams" EntitySet="teams" />
+            <End Role="assignments" EntitySet="assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Clients" Association="Self.FK_Request_Clients">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Work_Logs_Assignments" Association="Self.FK_Work_Logs_Assignments">
+            <End Role="assignments" EntitySet="assignments" />
+            <End Role="work_logs" EntitySet="work_logs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TechnomediaTestTaskDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="assignments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="team_id" Type="Int32" Nullable="false" />
+          <Property Name="request_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="requests" Relationship="Self.FK_Assignments_Requests" FromRole="assignments" ToRole="requests" />
+          <NavigationProperty Name="teams" Relationship="Self.FK_Assignments_Teams" FromRole="assignments" ToRole="teams" />
+          <NavigationProperty Name="work_logs" Relationship="Self.FK_Work_Logs_Assignments" FromRole="assignments" ToRole="work_logs" />
+        </EntityType>
+        <EntityType Name="clients">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contact_info" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="requests" Relationship="Self.FK_Request_Clients" FromRole="clients" ToRole="requests" />
+        </EntityType>
+        <EntityType Name="requests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="assignments" Relationship="Self.FK_Assignments_Requests" FromRole="requests" ToRole="assignments" />
+          <NavigationProperty Name="clients" Relationship="Self.FK_Request_Clients" FromRole="requests" ToRole="clients" />
+          <Property Name="research_notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="teams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="assignments" Relationship="Self.FK_Assignments_Teams" FromRole="teams" ToRole="assignments" />
+        </EntityType>
+        <EntityType Name="work_logs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="assignment_id" Type="Int32" Nullable="false" />
+          <Property Name="start_time" Type="DateTime" Precision="3" />
+          <Property Name="end_time" Type="DateTime" Precision="3" />
+          <Property Name="comments" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="assignments" Relationship="Self.FK_Work_Logs_Assignments" FromRole="work_logs" ToRole="assignments" />
+        </EntityType>
+        <Association Name="FK_Assignments_Requests">
+          <End Role="requests" Type="Self.requests" Multiplicity="1" />
+          <End Role="assignments" Type="Self.assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="requests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assignments">
+              <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Assignments_Teams">
+          <End Role="teams" Type="Self.teams" Multiplicity="1" />
+          <End Role="assignments" Type="Self.assignments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="assignments">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Work_Logs_Assignments">
+          <End Role="assignments" Type="Self.assignments" Multiplicity="1" />
+          <End Role="work_logs" Type="Self.work_logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="assignments">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="work_logs">
+              <PropertyRef Name="assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Clients">
+          <End Role="clients" Type="Self.clients" Multiplicity="1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TechnomediaTestTaskDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="assignments" EntityType="Self.assignments" />
+          <EntitySet Name="clients" EntityType="Self.clients" />
+          <EntitySet Name="requests" EntityType="Self.requests" />
+          <EntitySet Name="teams" EntityType="Self.teams" />
+          <EntitySet Name="work_logs" EntityType="Self.work_logs" />
+          <AssociationSet Name="FK_Assignments_Requests" Association="Self.FK_Assignments_Requests">
+            <End Role="requests" EntitySet="requests" />
+            <End Role="assignments" EntitySet="assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Assignments_Teams" Association="Self.FK_Assignments_Teams">
+            <End Role="teams" EntitySet="teams" />
+            <End Role="assignments" EntitySet="assignments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Work_Logs_Assignments" Association="Self.FK_Work_Logs_Assignments">
+            <End Role="assignments" EntitySet="assignments" />
+            <End Role="work_logs" EntitySet="work_logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Clients" Association="Self.FK_Request_Clients">
+            <End Role="clients" EntitySet="clients" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <EntitySet Name="roles" EntityType="TechnomediaTestTaskDBModel.roles" />
+          <EntitySet Name="users" EntityType="TechnomediaTestTaskDBModel.users" />
+          <AssociationSet Name="FK_Users_Roles" Association="TechnomediaTestTaskDBModel.FK_Users_Roles">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="users" Relationship="TechnomediaTestTaskDBModel.FK_Users_Roles" FromRole="roles" ToRole="users" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="roles" Relationship="TechnomediaTestTaskDBModel.FK_Users_Roles" FromRole="users" ToRole="roles" />
+        </EntityType>
+        <Association Name="FK_Users_Roles">
+          <End Type="TechnomediaTestTaskDBModel.roles" Role="roles" Multiplicity="1" />
+          <End Type="TechnomediaTestTaskDBModel.users" Role="users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище TechnomediaTestTaskDBModelContainer" CdmEntityContainer="TechnomediaTestTaskDBEntities">
+          <EntitySetMapping Name="assignments">
+            <EntityTypeMapping TypeName="TechnomediaTestTaskDBModel.assignments">
+              <MappingFragment StoreEntitySet="assignments">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clients">
+            <EntityTypeMapping TypeName="TechnomediaTestTaskDBModel.clients">
+              <MappingFragment StoreEntitySet="clients">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="contact_info" ColumnName="contact_info" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests">
+            <EntityTypeMapping TypeName="TechnomediaTestTaskDBModel.requests">
+              <MappingFragment StoreEntitySet="requests">
+                <ScalarProperty Name="research_notes" ColumnName="research_notes" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teams">
+            <EntityTypeMapping TypeName="TechnomediaTestTaskDBModel.teams">
+              <MappingFragment StoreEntitySet="teams">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="work_logs">
+            <EntityTypeMapping TypeName="TechnomediaTestTaskDBModel.work_logs">
+              <MappingFragment StoreEntitySet="work_logs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="assignment_id" ColumnName="assignment_id" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="TechnomediaTestTaskDBModel.roles">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="TechnomediaTestTaskDBModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
