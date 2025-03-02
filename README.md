@@ -11,7 +11,7 @@ sqlcmd -S (localdb)\TechnomediaTestTask -Q "CREATE DATABASE TechnomediaTestTaskD
 ```
 Скрипт для создания таблиц и заполнения данных [CreateTables.sql](https://github.com/Bayard1213/TechnomediaTestTask/blob/master/database/CreateTables.sql)
 
-connectionString в Web.config
+*connectionString* в Web.config
 ```
 Server=(localdb)\TechnomediaTestTask;Database=TechnomediaTestTaskDB;Trusted_Connection=True;MultipleActiveResultSets=true
 ```
