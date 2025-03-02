@@ -143,10 +143,9 @@ namespace TechnomediaTestTask.Tests.Controllers
 
             _mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns((teams)null);
 
-            var result = _controller.UpdateTeam(teamId, updatedTeamDTO) as BadRequestErrorMessageResult;
+            var result = _controller.UpdateTeam(teamId, updatedTeamDTO) as NotFoundResult;
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("Invalid Team ID.", result.Message);
         }
         #endregion
 

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using TechnomediaTestTask.DTOs.Assignment;
 using TechnomediaTestTask.DTOs.Request;
-using TechnomediaTestTask.Enums;
 using TechnomediaTestTask.Services;
 
 namespace TechnomediaTestTask.Controllers
