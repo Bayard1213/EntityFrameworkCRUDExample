@@ -1,4 +1,4 @@
-# TechnomediaTestTask
+# EntityFrameworkCRUDExample
 
 Схема базы данных
 ----
